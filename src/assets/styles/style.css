@@ -1,7 +1,43 @@
-*{
-    font-family: 'Roboto', sans-serif;
+* {
+    font-family: 'Poppins', sans-serif;
     font-weight: 300;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+
+.white-button {
+    background-color: transparent;
+    border: 1px white solid;
+    position: relative;
+    z-index: 1;
+    outline: none;
+    color: white;
+    font-weight: 500;
+    border-radius: 10px;
+    padding: 5px 10px;
+    transition: 0.5s;
+    min-width: 150px;
+}
+.white-button:hover{
+    cursor: pointer;
+    color: black;
+    border: 1px black solid;
+}
+.white-button::after{
+    width: 0%;
+    height: 100%;
+    border-radius: 10px;
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: white;
+    z-index: -1;
+    transition: 0.5s;
+}
+.white-button:hover::after{
+    width: 100%;
 }
