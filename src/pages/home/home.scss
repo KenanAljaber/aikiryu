@@ -1,12 +1,14 @@
 .general-cont {
 
     display: flex;
-    justify-content: center;
-    height: 100vh;
+    // justify-content: center;
+    // height: 100vh;
     width: 100%;
     background-color: white;
     margin-bottom: 1rem;
     position: relative;
+    flex-direction: column;
+    gap: 3rem;
 
     .hero-section {
         width: 100%;
@@ -29,7 +31,7 @@
             background: linear-gradient(to top, white, transparent);
         }
         .hero-image-cont {
-            position: relative;
+            
             .hero-image {
                 flex: 1;
                 max-height: 600px;
@@ -71,8 +73,8 @@
             }
 
         }
-
-
+        
+        
     }
 
 
@@ -121,4 +123,17 @@
             }
         }
     }
+}
+@media (max-width: 500px) {
+    .general-cont{
+        .hero-section{
+            .hero-image-cont {
+                .hero-image {
+                    max-height: 300px !important;
+                }
+            }
+
+        }
+    }
+    
 }

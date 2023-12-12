@@ -73,13 +73,14 @@ nav {
 
 .burger-open {
     top: 15px;
-    right: 43%;
+    right: 40%;
     transition: 0.6s;
 
 
 }
 
 .open-navbar-mobile {
+    position: fixed;
     // display: block!important;
     top: 0;
     right: 0 !important;
