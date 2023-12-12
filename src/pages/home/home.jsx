@@ -1,12 +1,30 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import "./home.scss";
 import osensei from "../../assets/images/osensei.jpg"
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import "leaflet/src/images/marker.svg";
+import karateSuite from "../../assets/icons/karate.png";
+import L from 'leaflet';
+
+
 
 function Home() {
-
-
-
-
+    const mapRef = useRef(null);
+    const [leHavreCoords, setLeHavreCoords] = React.useState([49.4905328, 0.1515774]);
+    const [goderVilleCoords, setGoderVilleCoords] = React.useState([49.6453753, 0.360046]);
+    const ZOOM_LEVEL = 10;
+    const karateIcon = new L.Icon({
+        iconUrl: karateSuite,
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32],
+    });
+    const zoomToPosition = (coords, zoom) => {
+        if (mapRef.current) {
+            const map = mapRef.current;
+            map.setView(coords, zoom);
+        }
+    };
     return (
         <div className="general-cont">
             <div className="hero-section">
@@ -23,6 +41,41 @@ function Home() {
                     </div>
                 </div>
                 <div className="hero-section-shade"></div>
+            </div>
+            <div className="map-section">
+                <div className="right">
+                    <h2>Trouvez nous</h2>
+                    <div className="dojos">
+                        <div className="dojo-item">
+                            <img onClick={() => zoomToPosition(leHavreCoords, 20)} src={karateSuite} alt="martial art suite" />
+                            <h3 onClick={() => zoomToPosition(leHavreCoords, 20)}>Le Havre</h3>
+                        </div>
+                        <div className="dojo-item">
+                            <img onClick={() => zoomToPosition(goderVilleCoords, 20)} src={karateSuite} alt="martial art suite" />
+                            <h3 onClick={() => zoomToPosition(goderVilleCoords, 20)}>Goderville</h3>
+                        </div>
+                    </div>
+                </div>
+                <MapContainer ref={mapRef} center={leHavreCoords} zoom={ZOOM_LEVEL} style={{ height: "350px", width: "100%" }} >
+                    <TileLayer
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+
+
+                    />
+                    <Marker position={leHavreCoords} icon={karateIcon} eventHandlers={{ click: (e) => zoomToPosition(leHavreCoords, 20) }}>
+                        <Popup>
+                            Le Havre
+                        </Popup>
+                    </Marker>
+                    <Marker position={goderVilleCoords} icon={karateIcon} eventHandlers={{ click: (e) => zoomToPosition(goderVilleCoords, 20) }}>
+                        <Popup>
+                            Goderville
+                        </Popup>
+                    </Marker>
+                </MapContainer>
+
+
             </div>
         </div>
     );
