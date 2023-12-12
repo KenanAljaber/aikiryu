@@ -7,6 +7,10 @@
     overflow-x: hidden;
 }
 
+body{
+    margin-bottom: 5rem;
+}
+
 
 .white-button {
     background-color: transparent;
