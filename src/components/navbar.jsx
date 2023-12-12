@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './navbar.scss';
 import aikido from "../assets/icons/karate.png";
+import blackBelt from "../assets/icons/black-belt.png";
 function Navbar() {
     const [isMobile, setIsMobile] = useState(false);
     const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
@@ -26,7 +27,7 @@ function Navbar() {
     return (
         <>
             <div className="fake-navbar"></div>
-            <img onClick={() => setIsMobileMenuOpened(!isMobileMenuOpened)} className={'burger ' + (isMobile && isMobileMenuOpened ? 'burger-open' : '')} src={aikido} alt="akido icon" />
+            <img onClick={() => setIsMobileMenuOpened(!isMobileMenuOpened)} className={'burger ' + (isMobile && isMobileMenuOpened ? 'burger-open' : '')} src={blackBelt} alt="akido icon" />
             <nav className={isMobile && isMobileMenuOpened ? "open-navbar-mobile" : "navbar"}>
                 <ul>
                     <li><a href="/about">Qui nous sommes ?</a></li>
