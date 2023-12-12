@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './navbar.scss';
-import aikido from "../assets/icons/karate.png";
-import blackBelt from "../assets/icons/black-belt.png";
+import aikido from "../../assets/icons/karate.png";
+import blackBelt from "../../assets/icons/black-belt.png";
 function Navbar() {
     const [isMobile, setIsMobile] = useState(false);
     const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);

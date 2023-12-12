@@ -42,6 +42,24 @@ function Home() {
                 </div>
                 <div className="hero-section-shade"></div>
             </div>
+
+        <div className="text-section">
+        <div className="paragraph">
+                <h2>Titre</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere odio non voluptas modi minus dolores odit est, quae consectetur, hic sed debitis. Consequuntur magnam aliquid excepturi minus facilis non voluptas!
+                Doloremque debitis dignissimos quidem, dolorem et rerum modi. Architecto molestiae earum dolore corrupti natus fuga odit minima deserunt itaque repellendus voluptatibus consequuntur fugit, distinctio quae, ab similique, numquam perspiciatis sequi.
+                Ducimus dolores labore corporis cumque optio quasi cum, totam facere quaerat ut fugiat repellat rem dolorum laudantium. Quia nulla autem, iusto eius ducimus nihil non beatae optio, consectetur libero ut.</p>
+            </div>
+                <div className="divider"></div>
+            <div className="paragraph">
+                <h2>Titre</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere odio non voluptas modi minus dolores odit est, quae consectetur, hic sed debitis. Consequuntur magnam aliquid excepturi minus facilis non voluptas!
+                Doloremque debitis dignissimos quidem, dolorem et rerum modi. Architecto molestiae earum dolore corrupti natus fuga odit minima deserunt itaque repellendus voluptatibus consequuntur fugit, distinctio quae, ab similique, numquam perspiciatis sequi.
+                Ducimus dolores labore corporis cumque optio quasi cum, totam facere quaerat ut fugiat repellat rem dolorum laudantium. Quia nulla autem, iusto eius ducimus nihil non beatae optio, consectetur libero ut.</p>
+            </div>
+        </div>
+
+
             <div className="map-section">
                 <div className="right">
                     <h2>Trouvez nous</h2>
@@ -56,6 +74,9 @@ function Home() {
                         </div>
                     </div>
                 </div>
+
+
+
                 <MapContainer ref={mapRef} center={leHavreCoords} zoom={ZOOM_LEVEL} style={{ height: "350px", width: "100%" }} >
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

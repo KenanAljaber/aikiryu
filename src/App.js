@@ -2,7 +2,8 @@ import { BrowserRouter, Link, Route, Routes, Navigate } from "react-router-dom";
 import AboutUs from "./pages/about-us/about-us";
 import Contact from "./pages/contact/contact";
 import Home from "./pages/home/home";
-import Navbar from "./components/navbar";
+import Navbar from "./components/navbar/navbar";
+import Footer from "./components/footer/footer";
 import "./assets/styles/global-style.css";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
+      <Footer></Footer>
     </BrowserRouter>
   );
 }
