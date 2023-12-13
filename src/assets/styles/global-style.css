@@ -15,6 +15,41 @@ body{
     /* margin-bottom: 5rem; */
 }
 
+.black-button{
+    background-color: transparent;
+    border: 1px var(--secondary-color) solid;
+    position: relative;
+    z-index: 1;
+    outline: none;
+    color: var(--secondary-color);
+    font-weight: 500;
+    border-radius: 10px;
+    padding: 5px 10px;
+    transition: 0.5s;
+    min-width: 150px;
+}
+.black-button:hover{
+    cursor: pointer;
+    color: var(--main-color);
+    border: 1px var(--main-color) solid;
+}
+.black-button::after{
+    width: 0%;
+    height: 100%;
+    border-radius: 10px;
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: var(--secondary-color);
+    z-index: -1;
+    transition: 0.5s;
+}
+.black-button:hover::after{
+    width: 100%;
+}
+
+
 
 .white-button {
     background-color: transparent;
