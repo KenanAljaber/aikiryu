@@ -6,7 +6,7 @@ return (
     <>
         <footer className="footer">
             <div className="container">
-                <p>Copyright © 2022. All Rights Reserved.</p>
+                <p>Copyright © 2023. All Rights Reserved.</p>
             </div>
         </footer>
     </>
