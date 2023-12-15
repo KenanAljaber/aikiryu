@@ -1,24 +1,33 @@
 import React, { useState } from 'react';
 import './contact.scss';
+import contactFormService from '../../services/contactFormService';
+// import contactFormService from '../../services/contactFormService';
 
 function Contact() {
 
     const MAX_CHARACTERS = 500;
     const [charsCount, setCharsCount] = useState(0);
     const [formData, setFormData] = useState({
-        nom: '',
-        prenom: '',
+        firstName: '',
+        lastName: '',
         email: '',
-        telephone: '',
-        demande: '',
+        phone: '',
+        message: '',
     });
-    const [showError, setShowError] = useState(false);
-    const [errorText, setErrorText] = useState('');
+    const [toast, setToast] = useState({ show: false, message: '', color: 'black' });
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        if (name === 'demande') {
+        if (name === 'message') {
             setCharsCount(value.length);
+        }
+        if(name=="phone"){
+            const onlyNums = value.replace(/[^0-9]/g, '');
+            setFormData({
+                ...formData,
+                [name]: onlyNums,
+            });
+            return;
         }
         setFormData({
             ...formData,
@@ -27,73 +36,87 @@ function Contact() {
 
     };
 
-    const showToast = (message) => {
-        setErrorText(message);
-        setShowError(true);
+    const showToast = (message, bgColor = null) => {
+        setToast({ show: true, message: message, bgColor: bgColor || 'black' });
         setTimeout(() => {
-            setShowError(false);
-            setErrorText('');
+            setToast({ show: false, message: '', bgColor: 'black' });
         }, 3000);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         // Perform validation here
-        if (formData.nom.trim() === '') {
-            showToast('Veuillez renseigner votre nom');
+        if (formData.firstName.trim() === '') {
+            showToast('Veuillez renseigner votre nom',"red");
             return;
         }
 
-        if (formData.prenom.trim() === '') {
-            showToast('Veuillez renseigner votre prenom');
+        if (formData.lastName.trim() === '') {
+            showToast('Veuillez renseigner votre prenom',"red");
             return;
         }
 
         if (formData.email.trim() === '') {
-            showToast('Veuillez renseigner votre email');
+            showToast('Veuillez renseigner votre email',"red");
             return;
         }
 
-        if (formData.telephone.trim() === '' || formData.telephone.length < 10) {
-            showToast('Veuillez renseigner votre telephone');
+        if (formData.phone.trim() === '' || formData.phone.length < 10) {
+            showToast('Veuillez renseigner votre telephone',"red");
             return;
         }
 
-        if (formData.demande.trim() === '') {
-            showToast('Veuillez renseigner votre demande');
+        if (formData.message.trim() === '') {
+            showToast('Veuillez renseigner votre demande',"red");
             return;
         }
-        if (formData.demande.length > MAX_CHARACTERS) {
-            showToast('Veuillez ne pas dépasser 500 caractères');
+        if (formData.message.length > MAX_CHARACTERS) {
+            showToast('Veuillez ne pas dépasser 500 caractères',"red");
             return;
         }
 
         // If validation passes, you can proceed with handling the form data
         console.log('Form data submitted:', formData);
+        contactFormService.sendContact(formData).then((response) => {
+            if (response?.status === 200) {
+                showToast('Votre demande a bien été envoyée',"green");
+                setFormData({
+                    firstName: '',
+                    lastName: '',
+                    email: '',
+                    phone: '',
+                    message: '',
+                });
+                setCharsCount(0);
+            }else{
+                showToast('error',"red");
+                
+            }
+        })
     };
 
     return (
         <>
             <div className="general-cont-contact">
                 <h1 className="title">Veux-tu devenir l'un de nous ?</h1>
-                {showError && <div className="error">
-                    <p>{errorText}</p>
+                {toast?.show && <div className="error" style={{ backgroundColor: toast?.bgColor }}>
+                    <p>{toast.message}</p>
                 </div>}
                 <form onSubmit={handleSubmit}>
                     <div className="row">
                         <input
                             type="text"
                             placeholder="Nom"
-                            name="nom"
-                            value={formData.nom}
+                            name="firstName"
+                            value={formData.firstName}
                             onChange={handleInputChange}
                         />
                         <input
                             type="text"
                             placeholder="Prenom"
-                            name="prenom"
-                            value={formData.prenom}
+                            name="lastName"
+                            value={formData.lastName}
                             onChange={handleInputChange}
                         />
                     </div>
@@ -108,15 +131,15 @@ function Contact() {
                         <input
                             type="tel"
                             placeholder="Téléphone"
-                            name="telephone"
-                            value={formData.telephone}
+                            name="phone"
+                            value={formData.phone}
                             onChange={handleInputChange}
                         />
                     </div>
                     <textarea
                         placeholder="Votre demande"
-                        name="demande"
-                        value={formData.demande}
+                        name="message"
+                        value={formData.message}
                         onChange={handleInputChange}
                     ></textarea>
                     <small className="char-count" style={{ color: charsCount >= MAX_CHARACTERS ? 'red' : 'black' }}>{charsCount}/{MAX_CHARACTERS}</small>
