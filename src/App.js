@@ -5,6 +5,7 @@ import Home from "./pages/home/home";
 import Navbar from "./components/navbar/navbar";
 import Footer from "./components/footer/footer";
 import "./assets/styles/global-style.css";
+import {  CalendarPage } from "./pages/calendar/calendar";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/calendar" element={<CalendarPage />} />
         
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

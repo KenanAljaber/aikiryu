@@ -38,6 +38,7 @@ function Navbar() {
                     <ul>
                         <li><a href="/about">Qui nous sommes ?</a></li>
                         <li><a href="/">Accueil</a></li>
+                        <li><a href="/calendar">Calendar</a></li>
                         <li><a href="/contact">Contact</a></li>
                     </ul>
                 </nav>
