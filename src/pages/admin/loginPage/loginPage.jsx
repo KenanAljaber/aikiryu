@@ -4,6 +4,7 @@ import loginService from "../../../services/loginService";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../services/authenticationService";
+import { CONSTANTS } from "../../../utils/constants";
 export const LoginPage = () => {
 const navigate=useNavigate();
 
@@ -29,8 +30,12 @@ const auth=useAuth();
             const response = await loginService.login(user);
             if(response) {
                 //navigate to /admin/dashboard
+                localStorage.setItem(CONSTANTS.TOKEN, response.token);
+                localStorage.setItem(CONSTANTS.USERNAME, response.username);
+                localStorage.setItem(CONSTANTS.USER_ID, response.id);
+
                 auth.login();
-                navigate('/sensei/admin/dashboard');
+                navigate('/sensei/admin/events');
             }
         }
     }

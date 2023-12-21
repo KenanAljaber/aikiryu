@@ -8,14 +8,14 @@ import "./assets/styles/global-style.css";
 import { CalendarPage } from "./pages/calendar/calendar";
 import ProtectedRoute from "./routes/protectedRoute";
 import { LoginPage } from './pages/admin/loginPage/loginPage';
-import { AdminDashboard } from './pages/admin/admin-dashboard/adminDashboard';
+import { Events } from './pages/admin/events/events';
 import { useAuth } from './services/authenticationService';
 
 function App() {
-  const auth=useAuth();
+  const auth = useAuth();
 
-  const showNavBarAndFooter=(window.location.pathname.search('/admin') == -1);
-  const adminSignedIn= auth.isAuthenticated;
+  const showNavBarAndFooter = (window.location.pathname.search('login') == -1);
+  const adminSignedIn = auth.isAuthenticated;
   console.log(adminSignedIn);
   return (
     <Router>
@@ -27,8 +27,8 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/calendar" element={<CalendarPage />} />
         <Route path="/sensei/admin/login" element={!adminSignedIn ? <LoginPage /> : <Navigate to="/sensei/admin/dashboard" />} />
-        <Route exact path='/sensei/admin/dashboard' element={<ProtectedRoute/>}>
-            <Route exact path='/sensei/admin/dashboard' element={<AdminDashboard/>}/>
+        <Route exact path='/sensei/admin/events' element={<ProtectedRoute />}>
+          <Route exact path='/sensei/admin/events' element={<Events />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" />} />

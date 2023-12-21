@@ -84,6 +84,23 @@ nav {
 
 }
 
+.navbar-sign-out{
+    padding: 5px;
+    color: black;
+    font-weight: 500;
+    border:none;
+    border-left: 1px solid black;
+    background-color: transparent;
+    transition: 0.3s;
+ 
+}
+.navbar-sign-out:hover{
+    cursor: pointer;
+    color: red;
+    border-left: 1px solid red;
+    font-size: 14px;
+}
+
 .open-navbar-mobile {
     right: 0;
 }

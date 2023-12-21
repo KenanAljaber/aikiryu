@@ -13,7 +13,7 @@ const AuthProvider=({children})=>{
     const logout=()=>{
         console.log("logout");
         setAuthenticated(false);
-        localStorage.setItem(CONSTANTS.IS_LOGGED_IN,".");
+        localStorage.clear();
     }
  
     const login =()=>{

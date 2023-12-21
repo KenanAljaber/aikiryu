@@ -9,9 +9,8 @@ async function login(data) {
 
     try {
         const response = await axios.post(`${BASE_URL}/admin/login`, data);
-        console.log(response);
         if (response.status === 200) {
-            return response;
+            return response.data;
         }
         return null;
     } catch (error) {

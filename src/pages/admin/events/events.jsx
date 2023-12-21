@@ -1,19 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../services/authenticationService";
+import "./events.scss";
 
-
-export const AdminDashboard = () => {
+export const Events = () => {
   const auth= useAuth();
   const navigator=useNavigate();
     
-const logout=()=>{
-    auth.logout();
 
-}
     return (
-        <div>
+        <>
+        <div className="main-cont-event">
+            
             <h1>Admin Dashboard</h1>
-            <button onClick={logout}>Se déconnecter</button>
         </div>
+        </>
     );
 };
