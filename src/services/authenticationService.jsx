@@ -1,24 +1,25 @@
 import { createContext } from "react";
 import { useState } from "react";
 import { useContext } from "react"
+import { CONSTANTS } from "../utils/constants";
 
 // authProvider
 const AuthContext=createContext();
 const AuthProvider=({children})=>{
-    const initialState = localStorage.getItem("loggedIn") === "true";
+    const initialState = localStorage.getItem(CONSTANTS.IS_LOGGED_IN) === CONSTANTS.LOGGED_IN_VALUE;
 
     const[isAuthenticated,setAuthenticated]=useState(initialState);
 
     const logout=()=>{
         console.log("logout");
         setAuthenticated(false);
-        localStorage.setItem("loggedIn","false");
+        localStorage.setItem(CONSTANTS.IS_LOGGED_IN,".");
     }
-
+ 
     const login =()=>{
         console.log("login");
         setAuthenticated(true);
-        localStorage.setItem("loggedIn","true");
+        localStorage.setItem(CONSTANTS.IS_LOGGED_IN,CONSTANTS.LOGGED_IN_VALUE);
     }
 
     return (
