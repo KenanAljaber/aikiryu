@@ -1,0 +1,33 @@
+.time-picker-cont {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    input {
+        border: none;
+        background-color: rgb(244 244 244);
+        padding: 5px;
+        font-size: 30px;
+        width: 45px;
+        text-align: center;
+
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        /* display: none; <- Crashes Chrome on hover */
+        -webkit-appearance: none;
+        margin: 0;
+        /* <-- Apparently some margin are still there even though it's hidden */
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield;
+        /* Firefox */
+    }
+
+    .semi-colon {
+        border: none !important;
+        font-size: 2rem!important;
+    }
+}
