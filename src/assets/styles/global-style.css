@@ -6,16 +6,17 @@
     box-sizing: border-box;
     /* overflow-x: hidden; */
 }
-:root{
+
+:root {
     --main-color: white;
     --secondary-color: black;
 }
 
-body{
+body {
     /* margin-bottom: 5rem; */
 }
 
-.black-button{
+.black-button {
     background-color: transparent;
     border: 1px var(--secondary-color) solid;
     position: relative;
@@ -28,12 +29,14 @@ body{
     transition: 0.5s;
     min-width: 150px;
 }
-.black-button:hover{
+
+.black-button:hover {
     cursor: pointer;
     color: var(--main-color);
     border: 1px var(--main-color) solid;
 }
-.black-button::after{
+
+.black-button::after {
     width: 0%;
     height: 100%;
     border-radius: 10px;
@@ -45,7 +48,55 @@ body{
     z-index: -1;
     transition: 0.5s;
 }
-.black-button:hover::after{
+
+.toast-app {
+    z-index: 2000;
+    position: fixed;
+    top: 30px;
+    right: 10px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    width: 500px;
+    text-align: center;
+    padding: 10px;
+    animation: slide-left 0.5s ease-in-out;
+}
+
+.block-ui {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.loadingIcon {
+    flex: none;
+    width: 200px;
+    height: auto;
+    animation: spin 2s linear infinite;
+
+}
+
+
+@keyframes slide-left {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+
+}
+
+.black-button:hover::after {
     width: 100%;
 }
 
@@ -64,12 +115,14 @@ body{
     transition: 0.5s;
     min-width: 150px;
 }
-.white-button:hover{
+
+.white-button:hover {
     cursor: pointer;
     color: var(--secondary-color);
     border: 1px var(--secondary-color) solid;
 }
-.white-button::after{
+
+.white-button::after {
     width: 0%;
     height: 100%;
     border-radius: 10px;
@@ -81,6 +134,7 @@ body{
     z-index: -1;
     transition: 0.5s;
 }
-.white-button:hover::after{
+
+.white-button:hover::after {
     width: 100%;
 }

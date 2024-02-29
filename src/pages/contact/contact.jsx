@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './contact.scss';
 import contactFormService from '../../services/contactFormService';
+import { useInfoMessage } from '../../context/infoMessageContext';
+import { InfoType } from '../../components/infoMessage/infoMessage';
 // import contactFormService from '../../services/contactFormService';
 
 function Contact() {
@@ -14,14 +16,16 @@ function Contact() {
         phone: '',
         message: '',
     });
-    const [toast, setToast] = useState({ show: false, message: '', color: 'black' });
+    const { showToast } = useInfoMessage();
+    
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         if (name === 'message') {
             setCharsCount(value.length);
         }
-        if(name=="phone"){
+        if (name == "phone") {
             const onlyNums = value.replace(/[^0-9]/g, '');
             setFormData({
                 ...formData,
@@ -36,43 +40,38 @@ function Contact() {
 
     };
 
-    const showToast = (message, bgColor = null) => {
-        setToast({ show: true, message: message, bgColor: bgColor || 'black' });
-        setTimeout(() => {
-            setToast({ show: false, message: '', bgColor: 'black' });
-        }, 3000);
-    };
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         // Perform validation here
         if (formData.firstName.trim() === '') {
-            showToast('Veuillez renseigner votre nom',"red");
+            showToast('Veuillez renseigner votre nom', InfoType.ERROR);
             return;
         }
 
         if (formData.lastName.trim() === '') {
-            showToast('Veuillez renseigner votre prenom',"red");
+            showToast('Veuillez renseigner votre prenom', InfoType.ERROR);
             return;
         }
 
         if (formData.email.trim() === '') {
-            showToast('Veuillez renseigner votre email',"red");
+            showToast('Veuillez renseigner votre email', InfoType.ERROR);
             return;
         }
 
         if (formData.phone.trim() === '' || formData.phone.length < 10) {
-            showToast('Veuillez renseigner votre telephone',"red");
+            showToast('Veuillez renseigner votre telephone', InfoType.ERROR);
             return;
         }
 
         if (formData.message.trim() === '') {
-            showToast('Veuillez renseigner votre demande',"red");
+            showToast('Veuillez renseigner votre demande', InfoType.ERROR);
             return;
         }
         if (formData.message.length > MAX_CHARACTERS) {
-            showToast('Veuillez ne pas dépasser 500 caractères',"red");
+            showToast('Veuillez ne pas dépasser 500 caractères', InfoType.ERROR);
             return;
         }
 
@@ -80,7 +79,7 @@ function Contact() {
         console.log('Form data submitted:', formData);
         contactFormService.sendContact(formData).then((response) => {
             if (response?.status === 200) {
-                showToast('Votre demande a bien été envoyée',"green");
+                showToast('Votre demande a bien été envoyée', InfoType.SUCCESS);
                 setFormData({
                     firstName: '',
                     lastName: '',
@@ -89,9 +88,9 @@ function Contact() {
                     message: '',
                 });
                 setCharsCount(0);
-            }else{
-                showToast('error',"red");
-                
+            } else {
+                showToast('error', InfoType.ERROR);
+
             }
         })
     };
@@ -100,9 +99,7 @@ function Contact() {
         <>
             <div className="general-cont-contact">
                 <h1 className="title">Veux-tu devenir l'un de nous ?</h1>
-                {toast?.show && <div className="error" style={{ backgroundColor: toast?.bgColor }}>
-                    <p>{toast.message}</p>
-                </div>}
+
                 <form onSubmit={handleSubmit}>
                     <div className="row">
                         <input

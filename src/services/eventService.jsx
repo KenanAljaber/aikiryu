@@ -2,7 +2,8 @@ import axios from "axios"
 import { BASE_URL, CONSTANTS } from "../utils/constants";
 
 export default {
-    create
+    create,
+    getEvents
 }
 
 async function create(data) {
@@ -10,7 +11,7 @@ async function create(data) {
     try {
         console.log('sending request');
         console.log(`${BASE_URL}/event`);
-        const response = await axios.post(`http://localhost:8080/api/event`, data, {
+        const response = await axios.post(`${BASE_URL}/event`, data, {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
@@ -25,5 +26,16 @@ async function create(data) {
     } catch (error) {
         console.log(error);
     }
+
+}
+
+async function getEvents ({limit=10, offset=0}) {
+    const response= await axios.get(`${BASE_URL}/event?limit=${limit}&offset=${offset}`,{
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem(CONSTANTS.TOKEN)
+        }
+    });
 
 }

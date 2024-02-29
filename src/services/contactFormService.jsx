@@ -1,12 +1,13 @@
-import axios from "axios"
 import { BASE_URL } from "../utils/constants";
+import axios from "axios";
 
 export default {
     sendContact
 }
 
-async function sendContact(data) {
+// const axios = MyAxios(); // Call MyAxios as a function to create axios instance
 
+async function sendContact(data) {
     try {
         console.log('sending request');
         const response = await axios.post(`${BASE_URL}/contact`, data);
@@ -18,5 +19,4 @@ async function sendContact(data) {
     } catch (error) {
         console.log(error);
     }
-
 }
