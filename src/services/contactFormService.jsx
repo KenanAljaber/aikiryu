@@ -1,13 +1,16 @@
+import interceptor from "../interceptor/interceptor";
 import { BASE_URL } from "../utils/constants";
-import axios from "axios";
+// import axios from "axios";
+
 
 export default {
     sendContact
 }
 
-// const axios = MyAxios(); // Call MyAxios as a function to create axios instance
+
 
 async function sendContact(data) {
+    const axios=interceptor.getInstance();
     try {
         console.log('sending request');
         const response = await axios.post(`${BASE_URL}/contact`, data);
@@ -20,3 +23,8 @@ async function sendContact(data) {
         console.log(error);
     }
 }
+
+
+
+
+

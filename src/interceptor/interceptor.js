@@ -1,20 +1,57 @@
-// axiosInstance.js
+
 import axios from 'axios';
-import { useBlockUi } from '../context/isLoadingContext';
 
-const axiosInstance = axios.create();
+let axiosInstance = null;
 
-axiosInstance.interceptors.request.use(
-  config => {
-    const {showLoading, hideLoading} = useBlockUi();
-    const token = localStorage.getItem("token");
-    if (token) {
-      config.headers["Authorization"] = "Bearer " + token;
+export default {
+  getInstance,
+  initializeInterceptor
+}
+
+function getInstance() {
+  if (!axiosInstance) {
+    return null;
+  }
+  return axiosInstance;
+}
+
+function initializeInterceptor(showLoading, hideLoading) {
+  if (axiosInstance) return;
+  axiosInstance = axios.create();
+
+  axiosInstance.interceptors.request.use(
+    config => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        config.headers["Authorization"] = "Bearer " + token;
+      }
+      showLoading();
+      // console.log('passed the interceptor req');
+      return config;
+    },
+    error => {
+      // console.log('passed the interceptor error ');
+      hideLoading();
+      console.log(error);
+      return Promise.reject(error);
     }
-    showLoading();
-    return config;
-  },
-  error => Promise.reject(error)
-);
+    );
+    axiosInstance.interceptors.response.use(
+      response => {
+        setTimeout(() => {
+          hideLoading();
+          
+        }, 1000);
+        // console.log('passed the interceptor response ');
+      return response;
+    },
+    error => {
+      setTimeout(() => {
+        hideLoading();
+      }, 1000);
+      console.log(error);
+      return Promise.reject(error);
 
-export default axiosInstance;
+    }
+  )
+}

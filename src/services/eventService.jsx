@@ -1,4 +1,4 @@
-import axios from "axios"
+import interceptor from "../interceptor/interceptor";
 import { BASE_URL, CONSTANTS } from "../utils/constants";
 
 export default {
@@ -7,7 +7,7 @@ export default {
 }
 
 async function create(data) {
-
+    const axios=interceptor.getInstance();
     try {
         console.log('sending request');
         console.log(`${BASE_URL}/event`);
@@ -16,26 +16,27 @@ async function create(data) {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
                 'Authorization': 'Bearer ' + localStorage.getItem(CONSTANTS.TOKEN)
-
+                
             }
         });
-        // if (response.status === 200) {
-        //     return response.data;
-        // }
-        return null;
-    } catch (error) {
-        console.log(error);
-    }
-
-}
-
-async function getEvents ({limit=10, offset=0}) {
-    const response= await axios.get(`${BASE_URL}/event?limit=${limit}&offset=${offset}`,{
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': 'Bearer ' + localStorage.getItem(CONSTANTS.TOKEN)
+        if (response.status === 200) {
+                return response;
+            }
+            return null;
+        } catch (error) {
+            console.log(error);
         }
+        
+    }
+    
+    async function getEvents ({limit=10, offset=0}) {
+        const axios=interceptor.getInstance();
+        const response= await axios.get(`${BASE_URL}/event?limit=${limit}&offset=${offset}`,{
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem(CONSTANTS.TOKEN)
+            }
     });
 
 }
