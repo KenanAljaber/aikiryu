@@ -1,5 +1,5 @@
-// export const BASE_URL='https://aikiryu-lehavre.fr';
-export const BASE_URL='http://localhost:8080/api';
+export const BASE_URL='https://aikiryu-lehavre.fr/api';
+// export const BASE_URL='http://localhost:8080/api';
 // 
 
 
@@ -9,4 +9,4 @@ export const CONSTANTS={
     USERNAME:'SWWQ',
     USER_ID:'ZQW2',
     TOKEN:'CAQW9Z'
-}
+}   
