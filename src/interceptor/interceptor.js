@@ -1,5 +1,6 @@
 
 import axios from 'axios';
+import { CONSTANTS } from '../utils/constants';
 
 let axiosInstance = null;
 
@@ -21,7 +22,8 @@ function initializeInterceptor(showLoading, hideLoading) {
 
   axiosInstance.interceptors.request.use(
     config => {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem(CONSTANTS.TOKEN)
+      //'Authorization': 'Bearer ' + localStorage.getItem(CONSTANTS.TOKEN)
       if (token) {
         config.headers["Authorization"] = "Bearer " + token;
       }

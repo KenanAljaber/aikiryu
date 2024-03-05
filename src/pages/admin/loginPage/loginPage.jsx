@@ -43,12 +43,14 @@ const auth=useAuth();
     return (
         <>
             <div className="general-cont-login-page">
+
                 <div className="form">
                     <h1>Bienvénue</h1>
                     <img className="aikido" src={aikidoSymbol} alt="" />
                     <input name="username" onChange={handleInputChange}  placeholder="Nom d'utilisateur" type="text" />
                     <input name="password" onChange={handleInputChange} placeholder="Mot de passe" type="password" />
                     <button onClick={handleSubmit}>Connexion</button>
+                    <button onClick={() => navigate('/home')}>Retour</button>
                 </div>
             </div>
 

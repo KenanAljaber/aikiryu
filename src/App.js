@@ -5,7 +5,7 @@ import Home from "./pages/home/home";
 import Navbar from "./components/navbar/navbar";
 import Footer from "./components/footer/footer";
 import "./assets/styles/global-style.css";
-import { CalendarPage } from "./pages/calendar/calendar";
+import CalendarPage  from "./pages/calendar/calendarPage";
 import ProtectedRoute from "./routes/protectedRoute";
 import { LoginPage } from './pages/admin/loginPage/loginPage';
 import { Events } from './pages/admin/events/events';
@@ -13,14 +13,15 @@ import { useAuth } from './services/authenticationService';
 import { InfoMessageProvider } from './context/infoMessageContext';
 import { useBlockUi } from './context/isLoadingContext';
 import interceptor from './interceptor/interceptor';
+import { useEffect } from 'react';
 function App() {
   const auth = useAuth();
 
-  const showNavBarAndFooter = (window.location.pathname.search('login') == -1);
   const adminSignedIn = auth.isAuthenticated;
-
+  // initialize interceptor
   const { showLoading, hideLoading } = useBlockUi();
   interceptor.initializeInterceptor(showLoading, hideLoading);
+
 
 
 
@@ -28,22 +29,22 @@ function App() {
 
     <InfoMessageProvider>
       <Router>
-        {showNavBarAndFooter && <Navbar></Navbar>}
+         <Navbar></Navbar>
         <Routes>
 
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/calendar" element={<CalendarPage />} />
-          <Route path="/sensei/admin/login" element={!adminSignedIn ? <LoginPage /> : <Navigate to="/sensei/admin/dashboard" />} />
+          <Route path="/sensei/admin/login" element={!adminSignedIn ? <LoginPage /> : <Navigate to="/sensei/admin/events" />} />
           <Route exact path='/sensei/admin/events' element={<ProtectedRoute />}>
             <Route exact path='/sensei/admin/events' element={<Events />} />
           </Route>
 
-          <Route path="*" element={<Navigate to="/" />} />
+          <Route path="*" element={<Home />} />
 
         </Routes>
-        {showNavBarAndFooter && <Footer></Footer>}
+        <Footer></Footer>
       </Router>
     </InfoMessageProvider>
 

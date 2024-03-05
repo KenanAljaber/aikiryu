@@ -7,7 +7,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useEffect, useState } from "react";
 import { TimePicker } from "../../../components/timePicker/timePicker";
 import { useInfoMessage } from "../../../context/infoMessageContext";
-import { InfoType } from "../../../components/infoMessage/infoMessage";
+import InfoMessage, { InfoType } from "../../../components/infoMessage/infoMessage";
+import MyCalendar from "../../../components/calendar/calendar";
 
 
 export const Events = () => {
@@ -19,18 +20,28 @@ export const Events = () => {
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
     const [eventName, setEventName] = useState("");
+    const [selectedLocation, setSelectedLocation] = useState("");
+    const locations = ["Le Havre", "Goderville"];
     const [days, setDays] = useState([]);
+    const SELECT_OPTION = "Seleccionner";
     const { showToast } = useInfoMessage();
     useEffect(() => {
         console.log(startTime);
     }, [startTime]);
 
     const handleSubmit = async () => {
-        if (startTime === "" || endTime === "" || !startDate || !endDate) {
-            alert("Veuillez renseigner tous les champs");
+        if(!selectedLocation || selectedLocation==SELECT_OPTION){
+            showToast("Veuillez renseigner une location", InfoType.ERROR);
             return;
         }
-
+        if (eventName === "" || startTime === "" || endTime === "" || !startDate || !endDate || days.length === 0) {
+            showToast("Veuillez renseigner tous les champs", InfoType.ERROR);
+            return;
+        }
+        if(startTime > endTime || (startTime === endTime)) {
+            showToast("Veuillez renseigner une heure valide", InfoType.ERROR);
+            return;
+        }
         // Format dates in ISO 8601 format
         const formattedStartDate = startDate.toISOString();
         const formattedEndDate = endDate.toISOString();
@@ -41,17 +52,19 @@ export const Events = () => {
             end_date: formattedEndDate,
             start_time: startTime,
             end_time: endTime,
-            days: days
+            days: days,
+            location: selectedLocation
         };
+        console.log(event);
 
         console.log(event);
         // Now you can send the event object to your backend
         const resp = await eventService.create(event);
-        if(!resp){
+        if (!resp) {
             showToast("Si't vous plait renseigner tous les champs", InfoType.ERROR);
             return;
         }
-        if ( resp.status && (resp.status === 200 || resp.status === 201)) {
+        if (resp.status && (resp.status === 200 || resp.status === 201)) {
             showToast("EVENEMENT CREE", InfoType.SUCCESS);
         }
 
@@ -72,7 +85,22 @@ export const Events = () => {
                 <h1>Évenements</h1>
                 <div className="outer-cont-grid">
                     <div className="events-panel-cont">
-                        <input type="text" placeholder="Nom de l'évenement" className="grid-item one-column" onChange={(e) => setEventName(e.target.value)} />
+                        <div className="title-cont grid-item">
+                            <p>Titre</p>
+                            <input type="text" placeholder="Nom de l'évenement" className="grid-item" onChange={(e) => setEventName(e.target.value)} />
+                        </div>
+
+                        <div className="location-cont grid-item">
+                            <p>Localisation</p>
+                            <select name="location" id="location" value={selectedLocation} onChange={(e) => setSelectedLocation(e.target.value)}>
+                                <option value={SELECT_OPTION}>{SELECT_OPTION}</option>
+                                {locations.map((location) => (
+                                    <option key={location} value={location}>{location}</option>
+                                ))}
+
+                            </select>
+                        </div>
+
                         <div className="grid-item">
                             <h3>Date de commencement</h3>
                             <DatePicker dateFormat={"dd/MM/yyyy"} selected={startDate} onChange={(date) => setStartDate(date)}></DatePicker>
@@ -112,6 +140,7 @@ export const Events = () => {
                     </div>
 
                 </div>
+                <MyCalendar/>
             </div>
         </>
     );
