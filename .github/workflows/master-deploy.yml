@@ -39,4 +39,4 @@ jobs:
           docker pull kenanaljaber/aikiryu-react:latest
           docker stop aikiryu-react || true
           docker rm aikiryu-react || true
-          docker run -d --name aikiryu-react -p 80:3000 kenanaljaber/aikiryu-react:latest
+          docker run -d --name aikiryu-react -p 3000:3000 kenanaljaber/aikiryu-react:latest
