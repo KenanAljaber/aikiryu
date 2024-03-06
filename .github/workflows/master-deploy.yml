@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: debian-latest
     
     steps:
     - name: Checkout Repository
@@ -34,6 +34,7 @@ jobs:
         host: ${{ secrets.SERVER_HOST }}
         username: ${{ secrets.SERVER_USERNAME }}
         key: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}
+        verbosity: 3
         script: |
           docker pull kenanaljaber/aikiryu-react:latest
           docker stop aikiryu-react || true
