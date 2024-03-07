@@ -16,6 +16,9 @@ jobs:
     - name: Install Dependencies
       run: npm install
       
+    - name: Unset CI
+      run: unset CI
+      
     - name: Build React App
       run: npm run build
       
