@@ -1,0 +1,42 @@
+name: Deploy with Docker
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+      
+    - name: Install Dependencies
+      run: npm install
+      
+    - name: Build React App
+      run: npm run build
+      
+    - name: Docker Login
+      run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+      
+    - name: Build Docker Image
+      run: |
+        docker build -t kenanaljaber/aikiryu-react .
+        docker tag kenanaljaber/aikiryu-react:latest kenanaljaber/aikiryu-react:latest
+        docker push kenanaljaber/aikiryu-react:latest
+      
+    - name: SSH into Server and Run Docker Container
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USERNAME }}
+        key: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}
+        verbosity: 3
+        script: |
+          sudo docker pull kenanaljaber/aikiryu-react:latest
+          sudo docker stop aikiryu-react || true
+          sudo docker rm aikiryu-react || true
+          sudo docker run -d --name aikiryu-react -p 3000:3000 kenanaljaber/aikiryu-react:latest
