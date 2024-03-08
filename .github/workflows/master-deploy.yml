@@ -29,7 +29,6 @@ jobs:
         username: ${{ secrets.SERVER_USERNAME }}
         key: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}
         script: |
+          sudo docker rm image aikiryu-react -f 
           sudo docker pull kenanaljaber/aikiryu-react:latest
-          sudo docker stop aikiryu-react || true
-          sudo docker rm image aikiryu-react -f || true
           sudo docker run -d --name aikiryu-react -p 3000:3000 kenanaljaber/aikiryu-react:latest
