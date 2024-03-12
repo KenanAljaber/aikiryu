@@ -3,14 +3,14 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from 'leaflet';
 import { CONSTANTS } from "../../utils/constants";
 import karateSuite from "../../assets/icons/karate.png";
-const Map = ({ marks, zoomedPositionProp = null, height = "350px", width = "100%" }) => {
+const Map = ({ marks, zoomedPositionProp = null, height = "350px", width = "100%", zoomLevel = 10 }) => {
     const mapRef = useRef(null);
 
     
     useEffect(() => {
-        console.log("zoomedPositionProp", zoomedPositionProp);
+        // console.log("zoomedPositionProp", zoomedPositionProp);
         if (zoomedPositionProp !== null) {
-
+            console.log("zoomedPositionProp", zoomedPositionProp);
             zoomToPosition(zoomedPositionProp, 15);
         }
     }, [zoomedPositionProp]);
@@ -22,7 +22,6 @@ const Map = ({ marks, zoomedPositionProp = null, height = "350px", width = "100%
         }
     };
 
-    const ZOOM_LEVEL = 10;
     const karateIcon = new L.Icon({
         iconUrl: karateSuite,
         iconSize: [32, 32],
@@ -32,7 +31,7 @@ const Map = ({ marks, zoomedPositionProp = null, height = "350px", width = "100%
 
     return (
 
-        <MapContainer ref={mapRef} center={CONSTANTS.coords.leHavre.coords} zoom={ZOOM_LEVEL} style={{ height: height, width: width }} >
+        <MapContainer ref={mapRef} center={zoomedPositionProp ? zoomedPositionProp : CONSTANTS.coords.leHavre.coords} zoom={zoomLevel} style={{ height: height, width: width }} >
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

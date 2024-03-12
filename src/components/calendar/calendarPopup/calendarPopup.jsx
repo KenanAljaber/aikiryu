@@ -9,6 +9,7 @@ const CalendarPopup = ({ event, togglePopup, onEventUpdate }) => {
     const [marker, setMarker] = useState(null);
     const [suspended, setSuspended] = useState(event.is_suspended);
     const [color, setColor] = useState(event.color);
+    const [zoomedPosition, setZoomedPosition] = useState(null);
     const auth = useAuth();
     const editable = auth.isAuthenticated && event.end > new Date();
 
@@ -18,11 +19,19 @@ const CalendarPopup = ({ event, togglePopup, onEventUpdate }) => {
         if (event.location) {
             if (event.location.toLowerCase().includes("le havre")) {
                 setMarker(CONSTANTS.coords.leHavre);
+                setZoomedPosition(CONSTANTS.coords.leHavre.coords);
+                // console.log(`its a le havre`);
+
             } else {
+                // console.log(`its not a le havre`);
                 setMarker(CONSTANTS.coords.goderVille);
+                setZoomedPosition(CONSTANTS.coords.goderVille.coords);
+                // console.log(zoomedPosition);
             }
         }
-    }, []);
+        // console.log(event);
+        // console.log(marker);
+    }, [marker]);
 
     const updateSchedule = async () => {
         const data = {
@@ -80,10 +89,10 @@ const CalendarPopup = ({ event, togglePopup, onEventUpdate }) => {
                                 </div>
                             }
                             {
-                                marker &&
+                                marker && zoomedPosition &&
                                 <div className="map">
                                     <p>{event.location}</p>
-                                    <Map marks={[marker]} zoomedPositionProp={marker?.coords} height='200px' width='300px' />
+                                    <Map marks={[marker]} zoomLevel={12}  zoomedPositionProp={zoomedPosition} height='200px' width='300px' />
 
                                 </div>
                             }

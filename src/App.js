@@ -5,7 +5,7 @@ import Home from "./pages/home/home";
 import Navbar from "./components/navbar/navbar";
 import Footer from "./components/footer/footer";
 import "./assets/styles/global-style.css";
-import CalendarPage  from "./pages/calendar/calendarPage";
+import CalendarPage from "./pages/calendar/calendarPage";
 import ProtectedRoute from "./routes/protectedRoute";
 import { LoginPage } from './pages/admin/loginPage/loginPage';
 import { Events } from './pages/admin/events/events';
@@ -29,21 +29,24 @@ function App() {
 
     <InfoMessageProvider>
       <Router>
-         <Navbar></Navbar>
-        <Routes>
+        <Navbar></Navbar>
+        <div className='body-wrapper' style={{ minHeight: '100vh' }}>
 
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/calendar" element={<CalendarPage />} />
-          <Route path="/sensei/admin/login" element={!adminSignedIn ? <LoginPage /> : <Navigate to="/sensei/admin/events" />} />
-          <Route exact path='/sensei/admin/events' element={<ProtectedRoute />}>
-            <Route exact path='/sensei/admin/events' element={<Events />} />
-          </Route>
+          <Routes>
 
-          <Route path="*" element={<Home />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/calendar" element={<CalendarPage />} />
+            <Route path="/sensei/admin/login" element={!adminSignedIn ? <LoginPage /> : <Navigate to="/sensei/admin/events" />} />
+            <Route exact path='/sensei/admin/events' element={<ProtectedRoute />}>
+              <Route exact path='/sensei/admin/events' element={<Events />} />
+            </Route>
 
-        </Routes>
+            <Route path="*" element={<Home />} />
+
+          </Routes>
+        </div>
         <Footer></Footer>
       </Router>
     </InfoMessageProvider>

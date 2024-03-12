@@ -8,11 +8,11 @@ const InfoMessageContext = createContext();
 export const InfoMessageProvider = ({ children }) => {
     const [toast, setToast] = useState({ show: false, message: '' });
     const showToast = (message, infoType) => {
-        console.log(`called`);
+        // console.log(`called`);
         if(toast.show) return;
         const theme = getTheme(infoType);
         if (theme == null) return;
-        console.log(theme);
+        // console.log(theme);
         setToast({ show: true, message: message, bgColor: theme.bgColor || 'black', fontColor: theme.fontColor || 'white' });
         setTimeout(() => {
             setToast({ show: false, message: '', bgColor: theme.bgColor || 'black', fontColor: theme.fontColor || 'white' });

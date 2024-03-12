@@ -3,11 +3,13 @@ import eventService from "../../services/eventService";
 import CalendarPopup from "./calendarPopup/calendarPopup"
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
-const MyCalendar = ({ }) => {
+import './calendar.scss';
+const MyCalendar = ({ onRefresh=null }) => {
 
     const [schedules, setSchedules] = useState(null);
     const [date, setDate] = useState({ day: moment().date()-1, month: new Date().getMonth(), year: new Date().getFullYear() });
     const [selectedEvent, setSelectedEvent] = useState(null);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 700);
 
     useEffect(() => {
         const fetchSchedules = async () => {
@@ -27,9 +29,16 @@ const MyCalendar = ({ }) => {
         };
 
         fetchSchedules();
-    }, [date]);
+    }, [date, onRefresh]);
+    
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 700);
+        }
+
+    window.addEventListener('resize', handleResize);
 
     const eventStyleGetter = (event, start, end, isSelected) => {
+        console.log(`isMobile: ${isMobile}`);
         let style = {
             backgroundColor: event.is_suspended ? 'red' : 'green', // Set color based on is_suspended property
             borderRadius: '0px',
@@ -37,6 +46,15 @@ const MyCalendar = ({ }) => {
             color: 'white',
             display: 'block',
         };
+        //mobile view
+        if (isMobile) {
+            style.backgroundColor = event.is_suspended ? 'red' : 'green'; // Set color based on is_suspended property
+            style.borderRadius = '0px';
+            style.border = 'none';
+            style.color = 'white';
+            style.display = 'block';
+
+        }
 
         // Check if the event has passed
         if (new Date(event.end) < new Date()) {
@@ -47,6 +65,15 @@ const MyCalendar = ({ }) => {
             style: style
         };
     };
+
+    const dayPropGetter = (date) => {
+        let style={};
+        if(isMobile){
+            style={
+                width: '100%',
+            }
+        }
+    }
     const localizer = momentLocalizer(moment);
 
     return (
@@ -60,8 +87,9 @@ const MyCalendar = ({ }) => {
                     startAccessor="start"
                     endAccessor="end"
                     popup={true}
+                    dayPropGetter={dayPropGetter}
                     defaultDate={new Date()}
-                    style={{ height: "100vh" }}
+                    style={{ height: "100%", width: "100%", maxWidth: "100%" }}
                     showMultiDayTimes={true}
                     views={['week']}
                     step={60}

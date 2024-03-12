@@ -138,3 +138,11 @@ body {
 .white-button:hover::after {
     width: 100%;
 }
+
+@media (max-width: 500px) {
+    .toast-app {
+        z-index: 3000;
+        width: 275px;
+    }
+    
+}

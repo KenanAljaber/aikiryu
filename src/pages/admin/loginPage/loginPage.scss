@@ -7,11 +7,11 @@
     // justify-content: center;
     align-items: center;
 
-    h1{
+    h1 {
         color: var(--main-color);
         font-size: 3rem;
         font-weight: 600;
-        
+
     }
 
     img {
@@ -45,7 +45,8 @@
             text-align: start;
 
         }
-        button{
+
+        button {
             padding: 10px;
             min-width: 150px;
             margin-top: 1rem;
@@ -57,7 +58,7 @@
             font-weight: 500;
             transition: 0.5s;
 
-            &:hover{
+            &:hover {
                 cursor: pointer;
                 background-color: #02024F;
                 color: var(--main-color);
@@ -77,6 +78,31 @@
 
     50% {
         opacity: 1;
+    }
+
+}
+
+@media (max-width: 600px) {
+    .general-cont-login-page {
+
+        .form {
+
+            img {
+                width: 200px;
+            }
+
+            input {
+                padding: 5px;
+                min-width: 250px;
+                min-height: 20px;
+            }
+
+            button {
+                padding: 5px;
+                min-width: 110px;
+                font-size: 1rem;
+            }
+        }
     }
 
 }

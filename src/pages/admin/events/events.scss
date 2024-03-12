@@ -91,3 +91,17 @@
 
 
 }
+
+@media (max-width: 768px) {
+    .main-cont-event {
+        padding: 5px;
+        .outer-cont-grid {
+            width: 100%;
+            border:none;
+            .events-panel-cont {
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    }
+}

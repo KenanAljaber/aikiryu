@@ -25,10 +25,11 @@ export const Events = () => {
     const [days, setDays] = useState([]);
     const SELECT_OPTION = "Seleccionner";
     const { showToast } = useInfoMessage();
+    const [refressToken, setRefreshToken] = useState(0);
     useEffect(() => {
-        console.log(startTime);
+        // console.log(startTime);
     }, [startTime]);
-
+    
     const handleSubmit = async () => {
         if(!selectedLocation || selectedLocation==SELECT_OPTION){
             showToast("Veuillez renseigner une location", InfoType.ERROR);
@@ -38,8 +39,11 @@ export const Events = () => {
             showToast("Veuillez renseigner tous les champs", InfoType.ERROR);
             return;
         }
-        if(startTime > endTime || (startTime === endTime)) {
-            showToast("Veuillez renseigner une heure valide", InfoType.ERROR);
+
+        startDate.setHours(startTime.split(":")[0], startTime.split(":")[1], 0);
+        endDate.setHours(endTime.split(":")[0], endTime.split(":")[1], 0);
+        if(startDate > endDate || (startTime === endTime ) || (startDate === endDate)) {
+            showToast("Veuillez renseigner date et heure valide", InfoType.ERROR);
             return;
         }
         // Format dates in ISO 8601 format
@@ -66,8 +70,9 @@ export const Events = () => {
         }
         if (resp.status && (resp.status === 200 || resp.status === 201)) {
             showToast("EVENEMENT CREE", InfoType.SUCCESS);
+            setRefreshToken(refressToken + 1);
         }
-
+        
     };
     const addDay = (day) => {
         if (days.includes(day)) {
@@ -107,7 +112,9 @@ export const Events = () => {
                         </div>
                         <div className="grid-item">
                             <h3>Date de fin</h3>
-                            <DatePicker selected={endDate} onChange={(date) => {
+                            <DatePicker 
+                            dateFormat={"dd/MM/yyyy"}
+                            selected={endDate} onChange={(date) => {
                                 console.log(date);
                                 setEndDate(date)
                             }}></DatePicker>
@@ -140,7 +147,7 @@ export const Events = () => {
                     </div>
 
                 </div>
-                <MyCalendar/>
+                <MyCalendar onRefresh={refressToken}/>
             </div>
         </>
     );
