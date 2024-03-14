@@ -10,7 +10,7 @@ import ProtectedRoute from "./routes/protectedRoute";
 import { LoginPage } from './pages/admin/loginPage/loginPage';
 import { Events } from './pages/admin/events/events';
 import { useAuth } from './services/authenticationService';
-import { InfoMessageProvider } from './context/infoMessageContext';
+import { InfoMessageProvider, useInfoMessage } from './context/infoMessageContext';
 import { useBlockUi } from './context/isLoadingContext';
 import interceptor from './interceptor/interceptor';
 import { useEffect } from 'react';
@@ -20,14 +20,15 @@ function App() {
   const adminSignedIn = auth.isAuthenticated;
   // initialize interceptor
   const { showLoading, hideLoading } = useBlockUi();
-  interceptor.initializeInterceptor(showLoading, hideLoading);
+  const { showToast } = useInfoMessage();
+  interceptor.initializeInterceptor(showLoading, hideLoading, showToast);
 
 
 
 
   return (
 
-    <InfoMessageProvider>
+    
       <Router>
         <Navbar></Navbar>
         <div className='body-wrapper' style={{ minHeight: '100vh' }}>
@@ -49,7 +50,7 @@ function App() {
         </div>
         <Footer></Footer>
       </Router>
-    </InfoMessageProvider>
+
 
   );
 }

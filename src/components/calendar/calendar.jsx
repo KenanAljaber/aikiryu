@@ -38,7 +38,7 @@ const MyCalendar = ({ onRefresh=null }) => {
     window.addEventListener('resize', handleResize);
 
     const eventStyleGetter = (event, start, end, isSelected) => {
-        console.log(`isMobile: ${isMobile}`);
+        // console.log(`isMobile: ${isMobile}`);
         let style = {
             backgroundColor: event.is_suspended ? 'red' : 'green', // Set color based on is_suspended property
             borderRadius: '0px',

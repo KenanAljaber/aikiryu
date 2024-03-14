@@ -1,6 +1,6 @@
-
 import axios from 'axios';
 import { CONSTANTS } from '../utils/constants';
+import { InfoType } from '../components/infoMessage/infoMessage';
 
 let axiosInstance = null;
 
@@ -16,7 +16,7 @@ function getInstance() {
   return axiosInstance;
 }
 
-function initializeInterceptor(showLoading, hideLoading) {
+function initializeInterceptor(showLoading, hideLoading, showToast) {
   if (axiosInstance) return;
   axiosInstance = axios.create();
 
@@ -37,23 +37,30 @@ function initializeInterceptor(showLoading, hideLoading) {
       console.log(error);
       return Promise.reject(error);
     }
-    );
-    axiosInstance.interceptors.response.use(
-      response => {
-        setTimeout(() => {
-          hideLoading();
-          
-        }, 1000);
-        // console.log('passed the interceptor response ');
+  );
+
+  axiosInstance.interceptors.response.use(
+    response => {
+      setTimeout(() => {
+        hideLoading();
+      }, 1000);
+      // console.log('passed the interceptor response ');
       return response;
     },
     error => {
       setTimeout(() => {
         hideLoading();
       }, 1000);
-      console.log(error);
+      console.log(`error: ${error.message}`);
+      if (error.response && error.response.status === 302) {
+        // Redirect to login page
+        showToast("Session expire", InfoType.ERROR);
+        setTimeout(() => {
+          localStorage.clear();
+          window.location.href = '/login';
+        }, 3000);
+      }
       return Promise.reject(error);
-
     }
-  )
+  );
 }

@@ -5,13 +5,17 @@ import App from './App';
 import 'leaflet/dist/leaflet.css';
 import { AuthProvider } from './services/authenticationService';
 import { IsLoadingProvider } from './context/isLoadingContext';
+import { InfoMessageProvider } from './context/infoMessageContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <IsLoadingProvider>
-        <AuthProvider>
+        <InfoMessageProvider>
 
-            <App />
-        </AuthProvider>
+            <AuthProvider>
+
+                <App />
+            </AuthProvider>
+        </InfoMessageProvider>
     </IsLoadingProvider>
 );
