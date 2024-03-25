@@ -11,13 +11,13 @@ const AuthProvider=({children})=>{
     const[isAuthenticated,setAuthenticated]=useState(initialState);
 
     const logout=()=>{
-        console.log("logout");
+        // console.log("logout");
         setAuthenticated(false);
         localStorage.clear();
     }
  
     const login =()=>{
-        console.log("login");
+        // console.log("login");
         setAuthenticated(true);
         localStorage.setItem(CONSTANTS.IS_LOGGED_IN,CONSTANTS.LOGGED_IN_VALUE);
     }

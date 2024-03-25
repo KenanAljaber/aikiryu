@@ -76,7 +76,7 @@ function Contact() {
         }
 
         // If validation passes, you can proceed with handling the form data
-        console.log('Form data submitted:', formData);
+        // console.log('Form data submitted:', formData);
         contactFormService.sendContact(formData).then((response) => {
             if (response?.status === 200) {
                 showToast('Votre demande a bien été envoyée', InfoType.SUCCESS);

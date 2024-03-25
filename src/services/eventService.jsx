@@ -11,8 +11,8 @@ export default {
 async function create(data) {
     const axios = interceptor.getInstance();
     try {
-        console.log('sending request');
-        console.log(`${BASE_URL}/event`);
+        // console.log('sending request');
+        // console.log(`${BASE_URL}/event`);
         const response = await axios.post(`${BASE_URL}/event`, data, {
             headers: {
                 'Content-Type': 'application/json',
@@ -54,8 +54,8 @@ async function getEvents(day, month, year, limit = 14, offset = 0) {
 async function updateSchedule(data) {
     const axios = interceptor.getInstance();
     try {
-        console.log('sending request');
-        console.log(`${BASE_URL}/event`);
+        // console.log('sending request');
+        // console.log(`${BASE_URL}/event`);
         const response = await axios.put(`${BASE_URL}/event/schedule/${data.id}`, data);
         if (response.status === 200) {
             return response;

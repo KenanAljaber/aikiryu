@@ -59,9 +59,9 @@ export const Events = () => {
             days: days,
             location: selectedLocation
         };
-        console.log(event);
+        // console.log(event);
 
-        console.log(event);
+        // console.log(event);
         // Now you can send the event object to your backend
         const resp = await eventService.create(event);
         if (!resp) {
@@ -115,7 +115,7 @@ export const Events = () => {
                             <DatePicker 
                             dateFormat={"dd/MM/yyyy"}
                             selected={endDate} onChange={(date) => {
-                                console.log(date);
+                                // console.log(date);
                                 setEndDate(date)
                             }}></DatePicker>
                         </div>

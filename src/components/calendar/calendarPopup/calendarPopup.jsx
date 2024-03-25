@@ -41,7 +41,7 @@ const CalendarPopup = ({ event, togglePopup, onEventUpdate }) => {
         event.is_suspended = suspended;
         event.color = color;
         await eventService.updateSchedule(data);
-        console.log("updated");
+        // console.log("updated");
         onEventUpdate(event);
     }
 
